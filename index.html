@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <form>
+    <form id="form">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" class="form-control">
@@ -44,104 +44,12 @@
         <button id="addItem" type="button" class="btn btn-primary">Add Item</button>
       </form>
        
-      <div class="row">
-         <!-- <div class="col-md-4">
-      <div class="card card1" style="width: 18rem;">
-        <div class="card-header">
-          Task
-        </div>
-        <ul id="list" class="list-group list-group-flush">
-          <li class="list-group-item assigned">Assigned To:<p></p></li>
-          <li class="list-group-item">Assigned By:<p></p></li>
-          <li class="list-group-item">Due date:<p></p></li>
-          <li class="list-group-item">Status:<p></p></li>
-          <li class="list-group-item">Description:<p></p></li> 
-        </ul>
+      <div class="row" id="cardHolder">
+         
       </div>
+    <div class="list-group list">
+    
     </div>
-    <div class="col-md-4">
-      <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          Featured
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          Featured
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          Featured
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          Featured
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-      </div>
-    </div> -->
-    </div>
-
-    <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action active">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">List group item heading</h5>
-          <small>3 days ago</small>
-        </div>
-        <p class="mb-1">Status.</p>
-        
-      </a>
-      <a href="#" class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">List group item heading</h5>
-          <small>3 days ago</small>
-        </div>
-        <p class="mb-1">Status.</p>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">List group item heading</h5>
-          <small>3 days ago</small>
-        </div>
-        <p class="mb-1">Status.</p>
-      </a>
-    </div>
-      
 
       
     <script src="app.js"></script>
