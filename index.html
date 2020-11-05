@@ -6,9 +6,11 @@
     <title>To Do List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Pacifico&display=swap" rel="stylesheet">
   </head>
   <body>
-    <form id="form">
+    <h1 class="heading">To Do List</h1>
+    <form id="form" class="border border-dark">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" class="form-control">
@@ -41,15 +43,14 @@
             <span id="errorStatus"></span>
           </div>
       
-        <button id="addItem" type="button" class="btn btn-primary">Add Item</button>
+        <button id="addItem" type="button" class="btn btn-dark">Add Item</button>
       </form>
-       
+        <div class="list-group list">
+    
+        </div>
       <div class="row" id="cardHolder">
          
       </div>
-    <div class="list-group list">
-    
-    </div>
 
       
     <script src="app.js"></script>

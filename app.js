@@ -5,26 +5,27 @@
   let dueDate = document.querySelector("#dueDate").value;
   let status = document.querySelector("#status").value;
 
-  
-  // let dueDate = new Date(); 
+
   // let options = {weekday :"long", month :"short", day:"numeric"}; 
-  // duedate = dueDate.toLocaleDateString("en-US", options); 
+  // dueDate = dueDate.toString("en-US", options); 
   
 
 
     let passed = validateTaskForm(name, description, assignedTo, dueDate, status);
     if(passed == true){
-      taskManager.addTask(name, description, assignedTo, dueDate, status);
+      taskManager.createTaskObject(name, description, assignedTo, dueDate, status);
     }
 
     document.querySelector("#form").reset();
     
-    //console.log(name)
 });
 
 document.addEventListener("click", function(event) {
   let clicked = event.target;
- taskManager.deleteTask(clicked)
+  if (clicked.attributes.jobID.value == "delete") {
+    taskManager.deleteTask(clicked);
+  }
+  
 }); 
 
 function validateTaskForm(name, description, assignedTo, dueDate, status) {
@@ -35,17 +36,17 @@ function validateTaskForm(name, description, assignedTo, dueDate, status) {
   let validStatus = false; 
   let passed = false; 
 
-  if (name && name.length > 8) { 
+  if (name && name.length > 3) { 
     validName = true; 
   } else {
    document.querySelector("#errorName").textContent = "Enter valid name";
   }
-  if (description && description.length > 20) {
+  if (description && description.length > 8) {
     validDes = true; 
   } else {
   document.querySelector("#errorDescription").textContent = "Enter valid description";
  } 
- if (assignedTo && assignedTo.length > 8) {
+ if (assignedTo && assignedTo.length > 3) {
      validAssigned = true; 
  } else {
   document.querySelector("#errorAssigned").textContent = "Enter valid name";
@@ -72,8 +73,8 @@ function validateTaskForm(name, description, assignedTo, dueDate, status) {
 
 
 class TaskManager {
-  constructor(array) {
-    this.taskArray = array;
+  constructor() {
+    this.taskArray = [];
   } 
     getAllTask() {
 
@@ -82,7 +83,7 @@ class TaskManager {
 
     }
 
-    addTask(name, description, assignedTo, dueDate, status) {
+    createTaskObject(name, description, assignedTo, dueDate, status){
       this.taskArray.push({ 
         "Name": name, 
         "Description": description, 
@@ -92,16 +93,27 @@ class TaskManager {
         "TaskID": `${taskManager.taskArray.length < 1 ? 1: taskManager.taskArray.length+1}`
       });
 
-      //store this array in local memory 
+      console.log("after object creation" ,this.taskArray);
+
+       //store this array in local memory 
       localStorage.setItem("tasks", JSON.stringify(taskManager.taskArray));
-       return taskManager.taskArray;
-      //console.log(this.taskArray);
+
+      //gets the last item added to the array 
       let currentTask = this.taskArray[this.taskArray.length-1];
+
+      this.addTask(currentTask);
+    }
+
+    addTask(currentTask) {
+       //return taskManager.taskArray;
+      //console.log(this.taskArray);
+      
       //console.log(currentTask);
+  
       let cards = `<div class="col-md-4 start" id="${currentTask.TaskID}">
       <div class="card" style="width: 18rem;">
       <div class="card-header">
-        Task
+        Task ${currentTask.TaskID}
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item assigned">Assigned By:<p>${currentTask.Name}</p></li>
@@ -110,7 +122,7 @@ class TaskManager {
         <li class="list-group-item">Due date:<p>${currentTask.DueDate}</p></li>
         <li class="list-group-item">Status:<p>${currentTask.Status}</p></li>
       </ul>
-      <button id="delete" job=deleteCard type="button" class="btn btn-primary">Delete</button>
+      <button id="delete" jobID="delete" type="button" class="btn btn-dark">Delete</button>
     </div>
     </div>`
 
@@ -133,29 +145,45 @@ class TaskManager {
 
     deleteTask(clicked) {
       
-  let parent = clicked.parentNode.parentNode.attributes.id.value; 
-    for (let i = 0; i < this.taskArray.length; i++) {
-         if (this.taskArray[i].TaskID == parent) {
-          this.taskArray.splice(i,1); 
-          clicked.parentNode.parentNode.parentNode.removeChild(clicked.parentNode.parentNode)
+      let parent = clicked.parentNode.parentNode.attributes.id.value; 
+        for (let i = 0; i < this.taskArray.length; i++) {
+            if (this.taskArray[i].TaskID == parent) {
+              this.taskArray.splice(i,1); 
+              clicked.parentNode.parentNode.parentNode.removeChild(clicked.parentNode.parentNode)
 
-         }
-        }
+            }
+            }
+
+
+      // let start = document.querySelectorAll(".start");
+      //     for (let i = 0; i < this.taskArray.length; i++) {
+      //           let startid = start[i].attributes.id.value;
+      //              //console.log(start)
+      //           console.log(startid)
+      //           if (this.taskArray[i].TaskID  == startid) {
+      //             this.taskArray.splice(i,1); 
+      //             start[i].remove();  
+      //            }
+      //   }
 
        
         let deleteLists = document.querySelectorAll("a"); 
-    for (let i = 0; i < deleteLists.length; i++) {
-      if (deleteLists[i].attributes.id.value == parent) {
-        deleteLists[i].remove(); 
-  }
+        for (let i = 0; i < deleteLists.length; i++) {
+            if (deleteLists[i].attributes.id.value == parent) {
+                deleteLists[i].remove(); 
+            }
 
- }
+          }
   
+        localStorage.setItem("tasks", JSON.stringify(taskManager.taskArray));
 
     }
     
     
     updateTask() {
+
+
+
 
     }
     assignTask() {
@@ -164,40 +192,23 @@ class TaskManager {
   
   
   };
-
-  let array = []; 
-  let taskManager = new TaskManager(array); 
+ 
+let taskManager = new TaskManager(); 
   
-  let data = localStorage.getItem("tasks");
-
+let data = localStorage.getItem("tasks");
+console.log(data); 
 if(data){
     taskManager.taskArray = JSON.parse(data);
     populatePage(taskManager.taskArray)
 } else {
   taskManager.taskArray = [];
 }
+console.log(taskManager.taskArray)
 
 
-function populatePage(array){
+function populatePage(array){ 
     for(let i=0; i < array.length; i++){
         taskManager.addTask(array[i]);
     }
 }
  
-  
-  
-     
-  //  //let clicked = event.target.id;
-
-  //  if (clicked == "delete") {
-  //   for (let i = 0; i < this.taskArray.length; i++) {
-  //          let start = document.querySelectorAll(".start");
-  //         let startid = start[i].attributes.id.value;
-  //          //console.log(start)
-              //console.log(startid)
-  //      if (this.taskArray[i].TaskID  == startid) {
-  //              this.taskArray.splice(i,1); 
-  //              start.parentNode.removeChild(start); 
-       
-  //        }
-  //      }
