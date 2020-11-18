@@ -7,7 +7,7 @@ document.querySelector("#addItem").addEventListener("click", function () {
   let status = document.querySelector("#status").value;
 
   let passed = validateTaskForm(name, description, assignedTo, dueDate, status);
-  if (passed == true) {
+  if (passed) {
     taskManager.createTaskObject(
       name,
       description,
@@ -82,6 +82,15 @@ function validateTaskForm(name, description, assignedTo, dueDate, status) {
   return passed;
 }
 
+function formatDate(date) {
+  date = new Date(date);
+  let dd = date.getDate();
+  let mm = date.getMonth();
+  let yyyy = date.getFullYear();
+  date = `${dd}-${mm + 1}-${yyyy}`;
+  return date;
+}
+
 class TaskManager {
   constructor() {
     this.taskArray = [];
@@ -90,11 +99,7 @@ class TaskManager {
   getTasksWithStatus() {}
   //Creating the task objects
   createTaskObject(name, description, assignedTo, dueDate, status) {
-    dueDate = new Date(dueDate);
-    let dd = dueDate.getDate();
-    let mm = dueDate.getMonth();
-    let yyyy = dueDate.getFullYear();
-    dueDate = `${dd}-${mm + 1}-${yyyy}`;
+    dueDate = formatDate(dueDate);
 
     this.taskArray.push({
       Name: name,
@@ -204,12 +209,8 @@ class TaskManager {
         dueDate,
         status
       );
-      if (passed == true) {
-        dueDate = new Date(dueDate);
-        let dd = dueDate.getDate();
-        let mm = dueDate.getMonth();
-        let yyyy = dueDate.getFullYear();
-        dueDate = `${dd}-${mm + 1}-${yyyy}`;
+      if (passed) {
+        dueDate = formatDate(dueDate);
 
         task.Name = name;
         task.Description = description;
