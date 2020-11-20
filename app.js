@@ -1,12 +1,18 @@
 //Get values of user inputs
-document.querySelector("#addItem").addEventListener("click", function () {
-  let name = document.querySelector("#name").value;
-  let description = document.querySelector("#description").value;
-  let assignedTo = document.querySelector("#assignedTo").value;
-  let dueDate = document.querySelector("#dueDate").value;
-  let status = document.querySelector("#status").value;
+let name, description, assignedTo, dueDate, status, passed;
 
-  let passed = validateTaskForm(name, description, assignedTo, dueDate, status);
+function getValues() {
+  name = document.querySelector("#name").value;
+  description = document.querySelector("#description").value;
+  assignedTo = document.querySelector("#assignedTo").value;
+  dueDate = document.querySelector("#dueDate").value;
+  status = document.querySelector("#status").value;
+  passed = validateTaskForm(name, description, assignedTo, dueDate, status);
+}
+
+document.querySelector("#addItem").addEventListener("click", function () {
+  getValues();
+
   if (passed) {
     taskManager.createTaskObject(
       name,
@@ -46,18 +52,20 @@ function validateTaskForm(name, description, assignedTo, dueDate, status) {
   if (name && name.length > 3) {
     validName = true;
   } else {
-    document.querySelector("#errorName").textContent = "Enter valid name";
+    document.querySelector("#errorName").textContent =
+      "Enter valid name (must be at least 3 characters)";
   }
   if (description && description.length > 8) {
     validDes = true;
   } else {
     document.querySelector("#errorDescription").textContent =
-      "Enter valid description";
+      "Enter valid description (must be at least 8 characters)";
   }
   if (assignedTo && assignedTo.length > 3) {
     validAssigned = true;
   } else {
-    document.querySelector("#errorAssigned").textContent = "Enter valid name";
+    document.querySelector("#errorAssigned").textContent =
+      "Enter valid name (must be at least 3 characters)";
   }
   if (dueDate) {
     validDue = true;
@@ -81,7 +89,7 @@ function validateTaskForm(name, description, assignedTo, dueDate, status) {
 
   return passed;
 }
-
+//Date format function
 function formatDate(date) {
   date = new Date(date);
   let dd = date.getDate();
@@ -196,19 +204,8 @@ class TaskManager {
     ).outerHTML = `<button id="save" type="button" class="btn btn-dark">Save</button>`;
 
     document.querySelector("#save").addEventListener("click", function () {
-      let name = document.querySelector("#name").value;
-      let description = document.querySelector("#description").value;
-      let assignedTo = document.querySelector("#assignedTo").value;
-      let dueDate = document.querySelector("#dueDate").value;
-      let status = document.querySelector("#status").value;
+      getValues();
 
-      let passed = validateTaskForm(
-        name,
-        description,
-        assignedTo,
-        dueDate,
-        status
-      );
       if (passed) {
         dueDate = formatDate(dueDate);
 
